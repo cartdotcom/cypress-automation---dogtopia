@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 
 import { onlineStore } from "../../support/pageObject/onlineStore.admin.po";
 import { orderData, orderStatus, orderSaveMsg } from "../../support/data/order.data";
