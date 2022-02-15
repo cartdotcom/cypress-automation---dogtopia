@@ -1,0 +1,16 @@
+{
+  "name": "dogtopia",
+  "version": "1.0.0",
+  "description": "dogtopia",
+  "main": "index.js",
+  "scripts": {
+    "e2e-test": "npx cypress open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^9.3.1",
+    "faker": "^5.5.3"
+  }
+}
