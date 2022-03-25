@@ -14,6 +14,12 @@ export class order {
             .then((body) => { cy.wrap(body) })
     }
 
+    static getProductSearchIframe() {
+        return cy.get("iframe[src*='QuickProductSearch']")
+            .its("0.contentDocument.body").should("not.be.empty")
+            .then((body) => { cy.wrap(body) })
+    }
+
     static getEditOrderTitle() {
         return this.getOrderEditIframe().find("div[class='pageTitle']")
     }
@@ -34,4 +40,31 @@ export class order {
         return this.getOrderEditIframe().find("div[class*='alert-success']")
     }
 
+    static getOrderSearchItem() {
+        return this.getOrderEditIframe().find("input[id*='txtProductSearch']")
+    }
+
+    static getExistingOrderName() {
+        return this.getOrderEditIframe().find("div[class*='order-edit-item-name'] a")
+    }
+
+    static getAddItemButton() {
+        return this.getOrderEditIframe().find("input[class*='AddItemButton']")
+    }
+
+    static getAddButtonOnProductSearchIframe() {
+        return this.getProductSearchIframe().find("div[id*='upProductResults'] div[class*='item-details']:nth-child(3) span input")
+    }
+
+    static getOrderQuanity() {
+        return this.getOrderEditIframe().find("td[class='ShoppingCart'] input[id*='Quantity']")
+    }
+
+    static getOrderRemove() {
+        return this.getOrderEditIframe().find("td[class='ShoppingCart'] a[alternatetext='Remove from Cart']")
+    }
+
+    static getOrderRemoveBtnByName(name) {
+        return this.getOrderEditIframe().find("div[class*='order-edit-item-name'] a").contains(name).parent().parent().parent().find("a[alternatetext='Remove from Cart']")
+    }
 }

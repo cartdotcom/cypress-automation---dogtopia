@@ -79,4 +79,16 @@ export class fulfillment {
     static getPDBillingAddressPhone() {
         return cy.get("div[class='list-group list-group-flush'] div[class*='text-capitalize list-group-item']:nth-child(4) div:nth-child(6)")
     }
+
+    static getPDItemInTableByIndex(index) {
+        return cy.get("table tr:nth-child(" + index + ") td:nth-child(2) div[class*='6px']")
+    }
+
+    static getPDItemQtyInTableByName(name) {
+        return cy.get("table td:nth-child(2)").contains(name).parent().parent().find("td:nth-child(3)")
+    }
+
+    static getPDItemNameInTableByName(name) {
+        return cy.get("table td:nth-child(2)").contains(name)
+    }
 }
