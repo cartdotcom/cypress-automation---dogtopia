@@ -7,11 +7,15 @@ Cypress test scripts for Dogtopia
 
 # Steps to execute scripts on the test runner [GUI mode]
     - Run the command "npx cypress open"
+    - To launch the runner in specific environment like Dev, Stage or Prod
+        run the command as mentioned in the package.json
+        e.g. npm run e2e-test:dev / npm run e2e-test:stage
 
 # Steps to execute scripts on the cli [Non GUI mode]
     - Run the command "npx cypress run" with following arguments
         i. --spec path/to/the/specfile
         ii. --browser chrome/edge/electron [default = electron]
         iii. --headless [Non Gui mode] / --headed [Throuogh CLI but GUI mode]
-    - Example: npx cypress run --spec integration/storeFront/storeFront.spec.js --browser chrome --headless
-    - The above command will executes the scripts on chrome browser in a headless mode.
+        iv. --configFile= cypress.dev.json/cypress.stage.json/cypress.prod.json
+    - Example: npx cypress run --spec integration/createAndCancelOrder/cancelOrder.spec.js --browser chrome --headless --configFile= cypress.dev.json
+    - The above command will executes the scripts on chrome browser in a headless mode against dev environment.
