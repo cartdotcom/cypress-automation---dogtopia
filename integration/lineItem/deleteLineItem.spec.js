@@ -34,6 +34,7 @@ describe("Delete a line item in the online store and Validate the entry in the c
     })
 
     it("Verify the deleted order entry in Console - Fulfillment page after deleting a line item", () => {
+        cy.wait(7000)
         cy.log("Read from temp.json file");
         cy.readFile("temp.json").then((expectedData) => {
             cy.log("Login to the portal");

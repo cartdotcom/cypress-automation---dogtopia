@@ -43,6 +43,7 @@ describe("Add a line item in the online store and Validate the entry in the cons
     })
 
     it("Verify the added order entry in Console - Fulfillment page after adding a line item", () => {
+        cy.wait(7000)
         cy.log("Read from temp.json file");
         cy.readFile("temp.json").then((expectedData) => {
             cy.log("Login to the portal");
