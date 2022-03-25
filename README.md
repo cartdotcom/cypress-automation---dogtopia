@@ -16,6 +16,6 @@ Cypress test scripts for Dogtopia
         i. --spec path/to/the/specfile
         ii. --browser chrome/edge/electron [default = electron]
         iii. --headless [Non Gui mode] / --headed [Throuogh CLI but GUI mode]
-        iv. --configFile= cypress.dev.json/cypress.stage.json/cypress.prod.json
-    - Example: npx cypress run --spec integration/createAndCancelOrder/cancelOrder.spec.js --browser chrome --headless --configFile= cypress.dev.json
+        iv. --env configFile= cypress.dev.json/cypress.stage.json/cypress.prod.json
+    - Example: npx cypress run --spec integration/createAndCancelOrder/cancelOrder.spec.js --browser chrome --headless --env configFile= cypress.dev.json
     - The above command will executes the scripts on chrome browser in a headless mode against dev environment.
