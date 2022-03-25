@@ -40,6 +40,10 @@ export class order {
         return this.getOrderEditIframe().find("div[class*='alert-success']")
     }
 
+    static getOrderEditSuccessBannerCloseBtn() {
+        return this.getOrderEditIframe().find("div[class*='alert-success'] div[class='alert-close']")
+    }
+
     static getOrderSearchItem() {
         return this.getOrderEditIframe().find("input[id*='txtProductSearch']")
     }

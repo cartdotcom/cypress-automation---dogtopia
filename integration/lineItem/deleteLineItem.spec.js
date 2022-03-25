@@ -5,10 +5,113 @@ import { order } from "../../support/pageObject/onlineStore.admin.order.po";
 import { storeFront } from '../../support/pageObject/storeFront.po';
 import { fulfillment } from '../../support/pageObject/fulfillment.po';
 import { expect } from "chai";
+const faker = require('faker');
 
 describe("Delete a line item in the online store and Validate the entry in the console fulfilment", () => {
 
-    it("Verify deleting the line item to the order", () => {
+    let qty = 1;
+
+    it("Verify creating a order from Store front", () => {
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            return false
+        })
+        cy.log("Add a item to the cart");
+        cy.request({
+            method: 'POST',
+            url: Cypress.config("storeFrontUrl") + Cypress.config("productOne"),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+            },
+            body: {
+                _VS: 528,
+                __VIEWSTATE: '',
+                txtRedirectSearchBox: '',
+                ddSearchBoxCategories: 0,
+                txtRedirectSearchBox: '',
+                ddSearchBoxCategories: 0,
+                acctl446$txtEmailAddress: '',
+                acctl446$txtPasswor: '',
+                hfItemID: 36,
+                hfQtyDiscountAcrossVariants: false,
+                hfUseVariantInventory: false,
+                txtQuantity: qty,
+                btnAddToCart: 'Add to Cart',
+                acctl167$txtEmailAddress: '',
+                acIntegrityCheck: 'ac integrity check',
+                __VIEWSTATEENCRYPTED: ''
+            },
+        }).then(({ }) => {
+            cy.log("Visit the store front URL");
+            cy.visit(Cypress.config("storeFrontUrl"));
+            cy.log("Click on Cart Icon");
+            storeFront.getCartIcon().should('exist').click({ force: true });
+            cy.log("Click on Proceed to checkout button");
+            storeFront.getProceedToCheckout().should('exist').click({ force: true });
+
+            let billFName = faker.name.firstName();
+            let billLName = faker.name.lastName();
+            let billState = "Alaska"
+            let billCity = "Juneau"
+            let billZip = "99812";
+            let billAddress = faker.address.streetAddress();
+            let billPhone = faker.phone.phoneNumber('9#########');
+
+            let email = faker.internet.email();
+            let shipFName = faker.name.firstName();
+            let shipLName = faker.name.lastName();
+            let shipState = "Texas"
+            let shipCity = "Houston";
+            let shipZip = "77084";
+            let shipAddress = faker.address.streetAddress();
+            let shipPhone = faker.phone.phoneNumber('9#########');
+
+            cy.log("Enter email address");
+            storeFront.getCustomerEmail().should('exist').type(email, { force: true });
+            storeFront.getContinueAsGuestBtn().click({ force: true });
+
+            cy.log("Enter shipping address");
+            storeFront.getShipFirstNameInput().should('exist').type(shipFName, { force: true });
+            storeFront.getShipLastNameInput().should('exist').type(shipLName, { force: true });
+            storeFront.getShipStateDropdown().should('exist').select(shipState)
+            storeFront.getShipCityInput().should('exist').type(shipCity, { force: true });
+            storeFront.getShipZipInput().should('exist').type(shipZip, { force: true });
+            storeFront.getShipPhoneNoInput().scrollIntoView().click()
+            cy.wait(5000);
+            storeFront.getShipPhoneNoInput().click({ force: true }).clear().type(shipPhone, { delay: 200 }).then(() => {
+                storeFront.getShipAddress1Input().should('exist').type(shipAddress, { force: true })
+            })
+            storeFront.getShipContinueBtn().click({ force: true });
+
+            cy.log("Uncheck the same as billing address");
+            cy.wait(2000)
+            storeFront.getBillSameAsShipAdrCheckbox().should('exist').click({ force: true });
+
+            cy.log("Enter billing address");
+            storeFront.getBillFirstNameInput().should('exist').type(billFName, { force: true });
+            storeFront.getBillLastNameInput().should('exist').type(billLName, { force: true });
+            storeFront.getBillStateDropdown().select(billState);
+            storeFront.getBillCityInput().should('exist').type(billCity, { force: true });
+            storeFront.getBillZipInput().should('exist').type(billZip, { force: true });
+            storeFront.getBillPhoneInput().scrollIntoView().click()
+            cy.wait(5000);
+            storeFront.getBillPhoneInput().click({ force: true }).clear().type(billPhone, { delay: 200 }).then(() => {
+                storeFront.getBillAddressInput().should('exist').type(billAddress, { force: true })
+            })
+            storeFront.getBillContinueBtn().click({ force: true });
+
+            cy.log("Enter payment details");
+            cy.wait(2000)
+            cy.window().then((win) => {
+                win.document.querySelector(storeFront.getPurchaseOrder()).click()
+                storeFront.getPurchaseOrderInput().type("test123")
+                cy.wait(2000)
+                cy.log("Click on Place order button");
+                storeFront.getPlaceOrderBtn().should('exist').click({ force: true });
+            })
+        })
+    })
+    
+    it("Verify adding the line item to the order", () => {
         cy.log("Login to the portal")
         cy.visit(Cypress.config("storeAdminUrl"));
         cy.loginAdmin(Cypress.env("username"), Cypress.env("password"));
@@ -25,7 +128,25 @@ describe("Delete a line item in the online store and Validate the entry in the c
                 orderNo: orderNo
             })
         })
-        order.getOrderRemoveBtnByName(Cypress.config("productTwoName")).click()
+        order.getExistingOrderName().invoke('text').then((val) => {
+            if (val.toString().includes(Cypress.config("productOneName"))) {
+                cy.wait(1000)
+                order.getOrderSearchItem().clear({ force: true }).type(Cypress.config("productTwo"))
+            } else {
+                cy.wait(1000)
+                order.getOrderSearchItem().clear({ force: true }).type(Cypress.config("productOne"))
+            }
+            order.getAddItemButton().click()
+        })
+        order.getAddButtonOnProductSearchIframe().click()
+        order.getOrderEditSaveButton().click()
+        cy.wait(7000)
+        cy.log("Verify the Success message");
+        order.getOrderEditSuccessBanner().should('exist').invoke('text').should('eq', orderSaveMsg.sucMsg);
+
+        order.getOrderEditSuccessBannerCloseBtn().click()
+
+        order.getOrderRemoveBtnByName(Cypress.config("productOneName")).click()
         order.getOrderEditSaveButton().click()
         cy.wait(5000)
         cy.log("Verify the Success message");
@@ -64,7 +185,7 @@ describe("Delete a line item in the online store and Validate the entry in the c
                 }
                 cy.wait(100).then(() => {
                     expect(result).to.not.have.lengthOf(0)
-                    expect(result).to.not.include.members([Cypress.config("productTwoName")])
+                    expect(result).to.not.include.members([Cypress.config("productOneName")])
                 })
             })
         })
