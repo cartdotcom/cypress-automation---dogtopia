@@ -1,0 +1,31 @@
+{
+    "viewportWidth": 1024,
+    "viewportHeight": 900,
+    "fixturesFolder": "./fixtures",
+    "configFolder": "./config",
+    "integrationFolder": "./integration",
+    "modifyObstructiveCode": false,
+    "supportFile": "./support/index.js",
+    "pluginsFile": "./plugins/index.js",
+    "video": true,
+    "videosFolder": "./dist/report/videos",
+    "screenshotsFolder": "./dist/report/screenshots",
+    "chromeWebSecurity": false,
+    "defaultCommandTimeout": 45000,
+    "env": {
+        "username": "qa.fulfillment.dev@cart.com",
+        "password": "dogtopia#123",
+        "auth0_username": "c-godswill.ayewah@cart.com",
+        "auth0_password": "Bronx_2021",
+        "auth0_domain": "https://iam.bc.dev.americommerce.cloud/oauth/token",
+        "auth0_client_id": "GOnMpnfHmnYIDAOVFP7LvaX8JmItPXk3"
+    },
+    "projectId": "n63d1u",
+    "storeAdminUrl":"https://qafulfillmentdev.americommerce.com/store/admin/",
+    "storeFrontUrl":"https://qafulfillmentdev.americommerce.com/",
+    "fulfillmentUrl":"https://console-dev.cart.com",
+    "productOne":"iphone-13-pro-dev",
+    "productOneName":"iPhone 13 Pro - dev",
+    "productTwo":"vr-dev",
+    "productTwoName":"VR - dev"
+}
