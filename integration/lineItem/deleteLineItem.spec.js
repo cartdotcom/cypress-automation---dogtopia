@@ -110,9 +110,10 @@ describe("Delete a line item in the online store and Validate the entry in the c
             })
         })
     })
-    
+
     it("Verify adding the line item to the order", () => {
         cy.log("Login to the portal")
+        let expOrderNo;
         cy.visit(Cypress.config("storeAdminUrl"));
         cy.loginAdmin(Cypress.env("username"), Cypress.env("password"));
         cy.log("Click on the Orders option in the navigation menu");
@@ -124,9 +125,7 @@ describe("Delete a line item in the online store and Validate the entry in the c
         order.getEditOrderButtonByIndex(1).click({ force: true });
         order.getEditOrderTitle().should('exist').invoke('text').should('contain', orderData.editOrderTitle);
         order.getEditOrderNumber().invoke('attr', 'value').then((orderNo) => {
-            cy.writeFile("temp.json", {
-                orderNo: orderNo
-            })
+            expOrderNo = orderNo;
         })
         order.getExistingOrderName().invoke('text').then((val) => {
             if (val.toString().includes(Cypress.config("productOneName"))) {
@@ -143,7 +142,6 @@ describe("Delete a line item in the online store and Validate the entry in the c
         cy.wait(7000)
         cy.log("Verify the Success message");
         order.getOrderEditSuccessBanner().should('exist').invoke('text').should('eq', orderSaveMsg.sucMsg);
-
         order.getOrderEditSuccessBannerCloseBtn().click()
 
         order.getOrderRemoveBtnByName(Cypress.config("productOneName")).click()
@@ -151,6 +149,15 @@ describe("Delete a line item in the online store and Validate the entry in the c
         cy.wait(5000)
         cy.log("Verify the Success message");
         order.getOrderEditSuccessBanner().should('exist').invoke('text').should('eq', orderSaveMsg.sucMsg);
+        order.getOrderEditSuccessBannerCloseBtn().click()
+        cy.wait(2000)
+        cy.log("Write the expected results in the temp file")
+        order.getOrderTotal().invoke('text').then((total) => {
+            cy.writeFile("temp.json", {
+                orderNo: expOrderNo,
+                expTotal: total
+            })
+        })
 
     })
 
@@ -173,10 +180,11 @@ describe("Delete a line item in the online store and Validate the entry in the c
             fulfillment.getSearchInputField().clear({ force: true }).type(expectedData.orderNo, { force: true });
             cy.log("Click on the search button");
             fulfillment.getSearchButton().should('be.enabled').click({ force: true });
-            cy.log("Verify the records with order number entered should not be displayed on the search results on the page");
+            cy.log("Verify the records with order number entered should be displayed on the search results on the page");
             fulfillment.getOrderNumberOnCard(0).should('exist').click({ force: true });
             cy.wait(10000)
             cy.window().then((win) => {
+                cy.log("Verify the absence of deleted line items")
                 let result = []
                 for (let index = 1; index < win.document.querySelectorAll("table tr").length; index++) {
                     fulfillment.getPDItemInTableByIndex(index).invoke('text').then((val) => {
@@ -187,6 +195,8 @@ describe("Delete a line item in the online store and Validate the entry in the c
                     expect(result).to.not.have.lengthOf(0)
                     expect(result).to.not.include.members([Cypress.config("productOneName")])
                 })
+                cy.log("Verify the totalprice of the order")
+                fulfillment.getOrderTotalPrice().invoke('text').should('eq', expectedData.expTotal);
             })
         })
     })

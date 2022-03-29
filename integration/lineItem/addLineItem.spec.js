@@ -1,5 +1,5 @@
 import { onlineStore } from "../../support/pageObject/onlineStore.admin.po";
-import { orderData, orderStatus, orderSaveMsg } from "../../support/data/order.data";
+import { orderData, orderSaveMsg } from "../../support/data/order.data";
 import { order } from "../../support/pageObject/onlineStore.admin.order.po";
 import { storeFront } from '../../support/pageObject/storeFront.po';
 import { fulfillment } from '../../support/pageObject/fulfillment.po';
@@ -112,6 +112,7 @@ describe("Add a line item in the online store and Validate the entry in the cons
 
     it("Verify adding the line item to the order", () => {
         cy.log("Login to the portal")
+        let expOrderNo;
         cy.visit(Cypress.config("storeAdminUrl"));
         cy.loginAdmin(Cypress.env("username"), Cypress.env("password"));
         cy.log("Click on the Orders option in the navigation menu");
@@ -123,9 +124,7 @@ describe("Add a line item in the online store and Validate the entry in the cons
         order.getEditOrderButtonByIndex(1).click({ force: true });
         order.getEditOrderTitle().should('exist').invoke('text').should('contain', orderData.editOrderTitle);
         order.getEditOrderNumber().invoke('attr', 'value').then((orderNo) => {
-            cy.writeFile("temp.json", {
-                orderNo: orderNo
-            })
+            expOrderNo = orderNo;
         })
         order.getExistingOrderName().invoke('text').then((val) => {
             if (val.toString().includes(Cypress.config("productOneName"))) {
@@ -142,7 +141,15 @@ describe("Add a line item in the online store and Validate the entry in the cons
         cy.wait(7000)
         cy.log("Verify the Success message");
         order.getOrderEditSuccessBanner().should('exist').invoke('text').should('eq', orderSaveMsg.sucMsg);
-
+        order.getOrderEditSuccessBannerCloseBtn().click()
+        cy.wait(2000)
+        cy.log("Write the expected results in the temp file")
+        order.getOrderTotal().invoke('text').then((total) => {
+            cy.writeFile("temp.json", {
+                orderNo: expOrderNo,
+                expTotal: total
+            })
+        })
     })
 
     it("Verify the added order entry in Console - Fulfillment page after adding a line item", () => {
@@ -164,10 +171,11 @@ describe("Add a line item in the online store and Validate the entry in the cons
             fulfillment.getSearchInputField().clear({ force: true }).type(expectedData.orderNo, { force: true });
             cy.log("Click on the search button");
             fulfillment.getSearchButton().should('be.enabled').click({ force: true });
-            cy.log("Verify the records with order number entered should not be displayed on the search results on the page");
+            cy.log("Verify the records with order number entered should be displayed on the search results on the page");
             fulfillment.getOrderNumberOnCard(0).should('exist').click({ force: true });
             cy.wait(10000)
             cy.window().then((win) => {
+                cy.log("Verify the presence of added line items")
                 let result = []
                 for (let index = 1; index < win.document.querySelectorAll("table tr").length; index++) {
                     fulfillment.getPDItemInTableByIndex(index).invoke('text').then((val) => {
@@ -177,6 +185,8 @@ describe("Add a line item in the online store and Validate the entry in the cons
                 cy.wait(100).then(() => {
                     expect(result).to.include.members([Cypress.config("productOneName"), Cypress.config("productTwoName")])
                 })
+                cy.log("Verify the totalprice of the order")
+                fulfillment.getOrderTotalPrice().invoke('text').should('eq', expectedData.expTotal);
             })
         })
     })
