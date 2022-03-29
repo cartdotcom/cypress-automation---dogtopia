@@ -145,6 +145,10 @@ export class storeFront {
         return cy.get("div[class='OrderDetailsItemNr']")
     }
 
+    static getOrderStausAfterPlacing() {
+        return cy.get("span[id='lblOrderStatus']")
+    }
+
     static getTotalWithoutTax() {
         return cy.get("td[class='ViewOrderHead-total']")
     }

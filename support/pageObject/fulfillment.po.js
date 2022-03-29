@@ -91,4 +91,8 @@ export class fulfillment {
     static getPDItemNameInTableByName(name) {
         return cy.get("table td:nth-child(2)").contains(name)
     }
+
+    static getOrderTotalPrice() {
+        return cy.get("div[class*='h3'] span:nth-child(2)")
+    }
 }

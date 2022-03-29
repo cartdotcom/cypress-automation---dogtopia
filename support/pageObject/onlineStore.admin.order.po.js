@@ -8,6 +8,10 @@ export class order {
         return cy.get("table tbody tbody tr:nth-child(" + (index + 1) + ") td:nth-child(2) a[title='Edit Order']")
     }
 
+    static getEditOrderButtonByOrderNum(orderNo) {
+        return cy.get("table tbody tbody a[class='opt']").contains(orderNo).parent().parent().parent().find("a[title='Edit Order']")
+    }
+
     static getOrderEditIframe() {
         return cy.get("iframe[src*='OrderEdit']")
             .its("0.contentDocument.body").should("not.be.empty")
@@ -69,6 +73,10 @@ export class order {
     }
 
     static getOrderRemoveBtnByName(name) {
-        return this.getOrderEditIframe().find("div[class*='order-edit-item-name'] a").contains(name).parent().parent().parent().find("a[alternatetext='Remove from Cart']")
+        return this.getOrderEditIframe().find("div[class*='order-edit-item-name'] a").contains(name).parent().parent().parent().parent().find("a[alternatetext='Remove from Cart']")
+    }
+
+    static getOrderTotal() {
+        return this.getOrderEditIframe().find("td[class*='ShoppingCartPrice'] span[id*='_ctlOrderItemsEdit_lblBalance']")
     }
 }
