@@ -113,6 +113,8 @@ describe("Update a line item in the online store and Validate the entry in the c
 
     it("Verify updating the line item to the order", () => {
         cy.log("Login to the portal")
+        let expOrderNo;
+        let initialQty;
         cy.visit(Cypress.config("storeAdminUrl"));
         cy.loginAdmin(Cypress.env("username"), Cypress.env("password"));
         cy.log("Click on the Orders option in the navigation menu");
@@ -125,10 +127,8 @@ describe("Update a line item in the online store and Validate the entry in the c
         order.getEditOrderTitle().should('exist').invoke('text').should('contain', orderData.editOrderTitle);
         order.getEditOrderNumber().invoke('attr', 'value').then((orderNo) => {
             order.getOrderQuanity().first().invoke('attr', 'value').then((val) => {
-                cy.writeFile("temp.json", {
-                    orderNo: orderNo,
-                    initialQty: val
-                })
+                expOrderNo = orderNo;
+                initialQty = val;
                 order.getOrderQuanity().first().clear().type(parseInt(val) + 1)
             })
         })
@@ -136,6 +136,16 @@ describe("Update a line item in the online store and Validate the entry in the c
         cy.wait(7000)
         cy.log("Verify the Success message");
         order.getOrderEditSuccessBanner().should('exist').invoke('text').should('eq', orderSaveMsg.sucMsg);
+        order.getOrderEditSuccessBannerCloseBtn().click()
+        cy.wait(2000)
+        cy.log("Write the expected results in the temp file")
+        order.getOrderTotal().invoke('text').then((total) => {
+            cy.writeFile("temp.json", {
+                orderNo: expOrderNo,
+                expTotal: total,
+                expQty: initialQty
+            })
+        })
     })
 
     it("Verify the updated order entry in Console - Fulfillment page after updating the line item", () => {
@@ -157,12 +167,15 @@ describe("Update a line item in the online store and Validate the entry in the c
             fulfillment.getSearchInputField().clear({ force: true }).type(expectedData.orderNo, { force: true });
             cy.log("Click on the search button");
             fulfillment.getSearchButton().should('be.enabled').click({ force: true });
-            cy.log("Verify the records with order number entered should not be displayed on the search results on the page");
+            cy.log("Verify the records with order number entered should be displayed on the search results on the page");
             fulfillment.getOrderNumberOnCard(0).should('exist').click({ force: true });
             cy.wait(10000)
             fulfillment.getPDItemQtyInTableByName(Cypress.config("productOneName")).invoke('text').then((val) => {
-                expect(parseInt(val)).to.not.be.eql(parseInt(expectedData.initialQty))
-                expect(parseInt(val)).to.be.eql(parseInt(expectedData.initialQty) + 1)
+                cy.log("Verify the quantity")
+                expect(parseInt(val)).to.not.be.eql(parseInt(expectedData.expQty))
+                expect(parseInt(val)).to.be.eql(parseInt(expectedData.expQty) + 1)
+                cy.log("Verify the totalprice of the order")
+                fulfillment.getOrderTotalPrice().invoke('text').should('eq', expectedData.expTotal);
             })
         })
     })
