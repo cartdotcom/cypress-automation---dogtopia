@@ -27,7 +27,7 @@ describe("Cancel a Order in the online store and Validate the entry in the conso
         order.getOrderStatusDropdown().select(orderStatus.cancelOrder);
         cy.log("Click the Save button");
         order.getOrderEditSaveButton().click({ force: true });
-        cy.wait(5000);
+        cy.wait(7000);
         cy.log("Verify the Success message");
         order.getOrderEditSuccessBanner().should('exist').invoke('text').should('eq', orderSaveMsg.sucMsg);
 
