@@ -11,6 +11,10 @@ export class storeFront {
 
     }
 
+    static pinHeader() {
+        cy.get("div[class='Layout'] header[class='LayoutTop']").invoke("removeAttr", "style")
+    }
+
     static getAddToCartButton() {
         return this.getQuickViewIframe().find("input[id='btnAddToCart']")
     }
