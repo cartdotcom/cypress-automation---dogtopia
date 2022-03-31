@@ -111,7 +111,7 @@ describe("Delete a line item in the online store and Validate the entry in the c
         })
     })
 
-    it("Verify adding the line item to the order", () => {
+    it("Verify deleting the line item from the order", () => {
         cy.log("Login to the portal")
         let expOrderNo;
         cy.visit(Cypress.config("storeAdminUrl"));
