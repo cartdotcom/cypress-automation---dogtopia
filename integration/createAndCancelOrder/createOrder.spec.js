@@ -146,6 +146,7 @@ describe("Create a order from store Front and Validate the entry in the console 
                     totalWithTax: totalWithTax
                 })
             })
+            cy.wait(2000)
         })
 
     })
