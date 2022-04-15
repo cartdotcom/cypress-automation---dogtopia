@@ -14,10 +14,18 @@
     "defaultCommandTimeout": 45000,
     "env": {
         "username": "qa.fulfillment.ac@cart.com",
-        "password": "dogtopia#123"
+        "password": "dogtopia#123",
+        "auth0_username": "c-godswill.ayewah@cart.com",
+        "auth0_password": "Bronx_2021",
+        "auth0_domain": "https://authenticate.cart.com/oauth/token",
+        "auth0_client_id": "xaa7eZcOK70mCGhyva3ee49Va5b29kxO"
     },
     "projectId": "n63d1u",
-    "storeAdminUrl":"https://qafulfillment.americommerce.com/store/admin/",
-    "storeFrontUrl":"https://qafulfillment.americommerce.com/",
-    "fulfillmentUrl":"https://console.cart.com"
+    "storeAdminUrl": "https://qafulfillment.americommerce.com/store/admin/",
+    "storeFrontUrl": "https://qafulfillment.americommerce.com/",
+    "fulfillmentUrl": "https://console.cart.com",
+    "productOne": "iphone-13-pro-max-prod",
+    "productOneName": "iPhone 13 Pro Max - prod",
+    "productTwo": "vr-prod",
+    "productTwoName": "VR - prod"
 }
