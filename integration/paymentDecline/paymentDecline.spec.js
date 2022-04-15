@@ -154,7 +154,7 @@ describe("Create a order with invalid credit card details and verify it in the f
             order.getEditOrderButtonByOrderNum(expectedData.orderNo).click({ force: true });
             order.getEditOrderTitle().should('exist').invoke('text').should('contain', orderData.editOrderTitle);
             cy.log("Select the Order status as Cancel Order");
-            order.getOrderStatusDropdown().select(orderStatus.awaitingPayment);
+            order.getOrderStatusDropdown().select(orderStatus.approved);
             cy.log("Click the Save button");
             order.getOrderEditSaveButton().click({ force: true });
             cy.wait(7000);
