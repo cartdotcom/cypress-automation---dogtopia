@@ -7,7 +7,8 @@ export let orderData = {
 export let orderStatus = {
     "cancelOrder": "Cancel Order",
     "creditDeclined": "Credit Declined",
-    "awaitingPayment": "Awaiting Payment"
+    "awaitingPayment": "Awaiting Payment",
+    "approved": "Approved, Pending Shipping"
 }
 
 export let orderSaveMsg = {
@@ -19,4 +20,11 @@ export let invalidCC = {
     "ccName": "Test User",
     "ccExp": "01/29",
     "ccCvv": "123"
+}
+
+export let stateCode = {
+    "stateNameTexas": "texas",
+    "stateCodeTexas": "tx",
+    "stateNameAlaska": "alaska",
+    "stateCodeAlaska": "ak"
 }

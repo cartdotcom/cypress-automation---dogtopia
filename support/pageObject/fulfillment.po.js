@@ -1,3 +1,5 @@
+import { stateCode } from "../data/order.data"
+
 export class fulfillment {
 
     static getSearchByFilter() {
@@ -94,5 +96,13 @@ export class fulfillment {
 
     static getOrderTotalPrice() {
         return cy.get("div[class*='h3'] span:nth-child(2)")
+    }
+
+    static getStateCode(state) {
+        if (stateCode.stateNameTexas == state) {
+            return stateCode.stateCodeTexas
+        } else if (stateCode.stateNameAlaska == state) {
+            return stateCode.stateCodeAlaska
+        }
     }
 }

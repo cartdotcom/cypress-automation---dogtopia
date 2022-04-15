@@ -197,7 +197,7 @@ describe("Create a order from store Front and Validate the entry in the console 
                 expect(val.toString().toLowerCase()).to.contain(expectedData.shipCity.toString().toLowerCase())
             });
             fulfillment.getPDShippingAddressCityState().invoke('text').should((val) => {
-                expect(val.toString().toLowerCase()).to.contain(expectedData.shipState.toString().toLowerCase())
+                expect(val.toString().toLowerCase()).to.contain(fulfillment.getStateCode(expectedData.shipState.toString().toLowerCase()))
             });
             // fulfillment.getPDShippingAddressZip().invoke('text').should('contain', expectedData.shipZip);
             //  fulfillment.getPDShippingAddressPhone().invoke('text').should('contain', expectedData.shipPhone);
@@ -216,7 +216,7 @@ describe("Create a order from store Front and Validate the entry in the console 
                 expect(val.toString().toLowerCase()).to.contain(expectedData.billCity.toString().toLowerCase())
             });
             fulfillment.getPDBillingAddressCityState().invoke('text').should((val) => {
-                expect(val.toString().toLowerCase()).to.contain(expectedData.billState.toString().toLowerCase())
+                expect(val.toString().toLowerCase()).to.contain(fulfillment.getStateCode(expectedData.billState.toString().toLowerCase()))
             });
             // fulfillment.getPDBillingAddressZip().invoke('text').should('contain', expectedData.billZip);
             //  fulfillment.getPDBillingAddressPhone().invoke('text').should('contain', expectedData.billPhone);
