@@ -166,10 +166,10 @@ export class storeFront {
     }
 
     static getProdAndServiceDropdown() {
-        return cy.get("nav div:nth-child(3) button")
+        return cy.get("button[id*='headlessui-menu-button']")
     }
 
     static getProductandService(prodAndService) {
-        return cy.get("nav div:nth-child(3) div a[href='/" + prodAndService + "']")
+        return cy.get("[id*='headlessui-menu-items'][ role='menu']").find('a').eq(prodAndService)
     }
 }

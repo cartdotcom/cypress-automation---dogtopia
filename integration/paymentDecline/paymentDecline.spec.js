@@ -1,5 +1,5 @@
 import { onlineStore } from "../../support/pageObject/onlineStore.admin.po";
-import { orderData, orderSaveMsg, invalidCC, orderStatus } from "../../support/data/order.data";
+import { orderData, orderSaveMsg, invalidCC, orderStatus, featuredSolutions } from "../../support/data/order.data";
 import { order } from "../../support/pageObject/onlineStore.admin.order.po";
 import { storeFront } from '../../support/pageObject/storeFront.po';
 import { fulfillment } from '../../support/pageObject/fulfillment.po';
@@ -125,7 +125,7 @@ describe("Create a order with invalid credit card details and verify it in the f
             cy.visit(Cypress.config("fulfillmentUrl"))
             cy.log("Click on fulfillment option");
             storeFront.getProdAndServiceDropdown().click({ force: true });
-            storeFront.getProductandService('fulfillment').click({ force: true });
+            storeFront.getProductandService(featuredSolutions.FULFILLMENT).click({ force: true });
             cy.log("Click on the search by filter");
             fulfillment.getSearchByFilter().click({ force: true });
             cy.log("Select Order option");
@@ -172,7 +172,7 @@ describe("Create a order with invalid credit card details and verify it in the f
             cy.visit(Cypress.config("fulfillmentUrl"))
             cy.log("Click on fulfillment option");
             storeFront.getProdAndServiceDropdown().click({ force: true });
-            storeFront.getProductandService('fulfillment').click({ force: true });
+            storeFront.getProductandService(featuredSolutions.FULFILLMENT).click({ force: true });
             cy.log("Click on the search by filter");
             fulfillment.getSearchByFilter().click({ force: true });
             cy.log("Select Order option");

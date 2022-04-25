@@ -1,5 +1,6 @@
 import { storeFront } from '../../support/pageObject/storeFront.po';
 import { fulfillment } from '../../support/pageObject/fulfillment.po';
+import {featuredSolutions} from '../../support/data/order.data';
 const faker = require('faker');
 
 describe("Create a order from store Front and Validate the entry in the console fulfilment", () => {
@@ -160,7 +161,7 @@ describe("Create a order from store Front and Validate the entry in the console 
             cy.visit(Cypress.config("fulfillmentUrl"))
             cy.log("Click on fulfillment option");
             storeFront.getProdAndServiceDropdown().click({ force: true });
-            storeFront.getProductandService('fulfillment').click({ force: true });
+            storeFront.getProductandService(featuredSolutions.FULFILLMENT).click({ force: true });
             cy.log("Click on the search by filter");
             fulfillment.getSearchByFilter().click({ force: true });
             cy.log("Select Order option");

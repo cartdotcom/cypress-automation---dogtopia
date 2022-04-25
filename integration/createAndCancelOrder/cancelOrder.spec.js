@@ -1,5 +1,5 @@
 import { onlineStore } from "../../support/pageObject/onlineStore.admin.po";
-import { orderData, orderStatus, orderSaveMsg } from "../../support/data/order.data";
+import { orderData, orderStatus, orderSaveMsg, featuredSolutions } from "../../support/data/order.data";
 import { order } from "../../support/pageObject/onlineStore.admin.order.po";
 import { storeFront } from '../../support/pageObject/storeFront.po';
 import { fulfillment } from '../../support/pageObject/fulfillment.po';
@@ -42,7 +42,7 @@ describe("Cancel a Order in the online store and Validate the entry in the conso
             cy.visit(Cypress.config("fulfillmentUrl"))
             cy.log("Click on fulfillment option");
             storeFront.getProdAndServiceDropdown().click({ force: true });
-            storeFront.getProductandService('fulfillment').click({ force: true });
+            storeFront.getProductandService(featuredSolutions.FULFILLMENT).click({ force: true });
             cy.log("Click on the search by filter");
             fulfillment.getSearchByFilter().click({ force: true });
             cy.log("Select Order option");

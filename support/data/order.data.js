@@ -28,3 +28,10 @@ export let stateCode = {
     "stateNameAlaska": "alaska",
     "stateCodeAlaska": "ak"
 }
+
+export let featuredSolutions = {
+    FULFILLMENT: 1,
+    MULTICHANNEL_MANAGEMENT: 3,
+    STOREFRONT: 0,
+    UNIFIED_ANALYTICS: 2,
+}
