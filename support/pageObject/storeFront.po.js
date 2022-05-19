@@ -11,16 +11,20 @@ export class storeFront {
 
     }
 
+    static pinHeader() {
+        cy.get("div[class='Layout'] header[class='LayoutTop']").invoke("removeAttr", "style")
+    }
+
     static getAddToCartButton() {
         return this.getQuickViewIframe().find("input[id='btnAddToCart']")
     }
 
     static getCartIcon() {
-        return cy.get("span[class='head-count-badge head-badge']")
+        return cy.get("a[class*='shoppingCart-icon']")
     }
 
     static getProceedToCheckout() {
-        return cy.get("input[id='448_btnCheckOut']")
+        return cy.get("input[value*='Proceed to Checkout']")
     }
 
     static getCustomerEmail() {
@@ -65,6 +69,10 @@ export class storeFront {
 
     static getBillSameAsShipAdrCheckbox() {
         return cy.get("span[id='liSameAsBilling'] input[id*='rblSameAsBillingAddress']")
+    }
+
+    static getBillSameAsShipAdrCheckboxString() {
+        return "span[id='liSameAsBilling'] input[id*='rblSameAsBillingAddress']"
     }
 
     static getBillFirstNameInput() {
@@ -121,6 +129,14 @@ export class storeFront {
         return cy.get("div[class*='CreditCard-cvv'] input[id*='txtCVV']")
     }
 
+    static getPurchaseOrder() {
+        return "div[class*='CustomPayments Custom'] div[data-payment-name='Purchase Order'] div div[data-payment-name='Purchase Order']"
+    }
+
+    static getPurchaseOrderInput() {
+        return cy.get("input[id*='CustomPaymentMethods']")
+    }
+
     static getPlaceOrderBtn() {
         return cy.get("div[class*='checkout-placeOrder'] input[id*='btnPlaceOrder']")
     }
@@ -131,6 +147,10 @@ export class storeFront {
 
     static getSkuNoAfterPlacing() {
         return cy.get("div[class='OrderDetailsItemNr']")
+    }
+
+    static getOrderStausAfterPlacing() {
+        return cy.get("span[id='lblOrderStatus']")
     }
 
     static getTotalWithoutTax() {
@@ -146,10 +166,10 @@ export class storeFront {
     }
 
     static getProdAndServiceDropdown() {
-        return cy.get("div[class*='d-none'] div button[class*='rounded']")
+        return cy.get("button[id*='headlessui-menu-button']")
     }
 
     static getProductandService(prodAndService) {
-        return cy.get("div[class*='dropdown-menu show'] a[href='/" + prodAndService + "']")
+        return cy.get("[id*='headlessui-menu-items'][ role='menu']").find('a').eq(prodAndService)
     }
 }

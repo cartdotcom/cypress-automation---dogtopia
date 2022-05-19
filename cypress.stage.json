@@ -1,0 +1,31 @@
+{
+    "viewportWidth": 1024,
+    "viewportHeight": 900,
+    "fixturesFolder": "./fixtures",
+    "configFolder": "./config",
+    "integrationFolder": "./integration",
+    "modifyObstructiveCode": false,
+    "supportFile": "./support/index.js",
+    "pluginsFile": "./plugins/index.js",
+    "video": true,
+    "videosFolder": "./dist/report/videos",
+    "screenshotsFolder": "./dist/report/screenshots",
+    "chromeWebSecurity": false,
+    "defaultCommandTimeout": 45000,
+    "env": {
+        "username": "qa.fulfillment.stage@cart.com",
+        "password": "dogtopia#123",
+        "auth0_username": "c-godswill.ayewah@cart.com",
+        "auth0_password": "Bronx_2021",
+        "auth0_domain": "https://iam-stg.bc.dev.americommerce.cloud/oauth/token",
+        "auth0_client_id": "y5T8dwORLLjvId4d5fJ8pDr3foJvgDlY"
+    },
+    "projectId": "n63d1u",
+    "storeAdminUrl": "https://qafulfillmentstage.americommerce.com/store/admin/",
+    "storeFrontUrl": "https://qafulfillmentstage.americommerce.com/",
+    "fulfillmentUrl": "https://console-stage.cart.com",
+    "productOne": "iphone-13-pro-stage",
+    "productOneName": "iPhone 13 Pro - stage",
+    "productTwo": "nilam's scalf - stage",
+    "productTwoName": "nilam's scalf - stage"
+}

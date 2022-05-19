@@ -1,6 +1,4 @@
 {
-    "viewportWidth": 1024,
-    "viewportHeight": 900,
     "fixturesFolder": "./fixtures",
     "configFolder": "./config",
     "integrationFolder": "./integration",
@@ -9,11 +7,5 @@
     "pluginsFile": "./plugins/index.js",
     "video": true,
     "videosFolder": "./dist/report/videos",
-    "screenshotsFolder": "./dist/report/screenshots",
-    "chromeWebSecurity": false,
-    "defaultCommandTimeout": 45000,
-    "env": {
-        "username": "username",
-        "password": "password"
-    }
+    "screenshotsFolder": "./dist/report/screenshots"
 }

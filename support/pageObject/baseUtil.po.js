@@ -14,15 +14,27 @@ export class baseUtil {
         return cy.get("input[id='login-email']")
     }
 
-    static getPasswordInput() {
+    static getPasswordInputConsole() {
         return cy.get("input[id*='login-password']")
     }
 
-    static getPasswordInputString() {
+    static getPasswordInput() {
+        return cy.get("input[id*='_txtPassword']")
+    }
+
+    static getPasswordInputStringConsole() {
         return "input[id*='login-password']"
     }
 
-    static getLogInButton() {
+    static getPasswordInputString() {
+        return "input[id*='_txtPassword']"
+    }
+
+    static getLogInButtonConsole() {
         return cy.get("button[id*='btn-login']")
+    }
+
+    static getLogInButton() {
+        return cy.get("a[id*='btnLogin']")
     }
 }

@@ -1,3 +1,5 @@
+import { stateCode } from "../data/order.data"
+
 export class fulfillment {
 
     static getSearchByFilter() {
@@ -78,5 +80,29 @@ export class fulfillment {
 
     static getPDBillingAddressPhone() {
         return cy.get("div[class='list-group list-group-flush'] div[class*='text-capitalize list-group-item']:nth-child(4) div:nth-child(6)")
+    }
+
+    static getPDItemInTableByIndex(index) {
+        return cy.get("table tr:nth-child(" + index + ") td:nth-child(2) div[class*='6px']")
+    }
+
+    static getPDItemQtyInTableByName(name) {
+        return cy.get("table td:nth-child(2)").contains(name).parent().parent().find("td:nth-child(3)")
+    }
+
+    static getPDItemNameInTableByName(name) {
+        return cy.get("table td:nth-child(2)").contains(name)
+    }
+
+    static getOrderTotalPrice() {
+        return cy.get("div[class*='h3'] span:nth-child(2)")
+    }
+
+    static getStateCode(state) {
+        if (stateCode.stateNameTexas == state) {
+            return stateCode.stateCodeTexas
+        } else if (stateCode.stateNameAlaska == state) {
+            return stateCode.stateCodeAlaska
+        }
     }
 }
