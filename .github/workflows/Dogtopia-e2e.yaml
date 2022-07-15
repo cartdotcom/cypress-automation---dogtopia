@@ -64,7 +64,7 @@ jobs:
         with:
           channel-id: "C03NSCZP249"
           slack-message: |
-            *Cypress Automation - OS Storefront*
+            *Cypress Automation - Dogtopia*
 
             *Test Result:* _${{steps.test_suite.outcome == 'success' && 'Success! :party_blob:' || 'Failure! :alert:'}}_
 
