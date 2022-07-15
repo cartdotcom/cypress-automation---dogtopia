@@ -15,6 +15,3 @@ module.exports = (on, config) => {
   return getConfig(file)
 }
 
-Cypress.Screenshot.defaults({
-  screenshotOnRunFailure: false
-})
