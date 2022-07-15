@@ -14,3 +14,7 @@ module.exports = (on, config) => {
   const file = config.env.configFile || 'cypress.dev.json'
   return getConfig(file)
 }
+
+Cypress.Screenshot.defaults({
+  screenshotOnRunFailure: false
+})
