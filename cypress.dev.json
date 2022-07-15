@@ -7,7 +7,7 @@
     "modifyObstructiveCode": false,
     "supportFile": "./support/index.js",
     "pluginsFile": "./plugins/index.js",
-    "video": true,
+    "video": false,
     "videosFolder": "./dist/report/videos",
     "screenshotsFolder": "./dist/report/screenshots",
     "chromeWebSecurity": false,
