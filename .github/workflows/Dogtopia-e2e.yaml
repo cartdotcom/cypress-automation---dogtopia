@@ -1,0 +1,75 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Dogtopia Test Suite E2E
+
+on:
+#  schedule:
+#   - cron: "0 5 * * *"
+  workflow_dispatch:
+    inputs:
+      url:
+        description: The store url to run this test suite against.
+        required: true
+        type: string
+        default: https://qatestdev.americommerce.com/store/admin
+      username:
+        description: The username for the store URL.
+        required: true
+        type: string
+        default: qa.fulfillment.dev@cart.com
+      password:
+        description: The password for the store URL.
+        required: true
+        type: string
+        default: dogtopia#123
+      specPath:
+        description: The file path for the spec file(s) we should run.
+        required: true
+        type: choice
+        default: "integration/*"
+        options:
+          - integration/**
+          - integration/createAndCancelOrder/*.js
+          - integration/lineItem/*.js
+          - integration/order/*.js
+          - integration/paymentDecline/*.js
+      iterations:
+        description: The number of iterations to run.
+        required: true
+        type: string
+        default: "1"
+
+jobs:
+  cypress:
+    name: Cypress Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Run Test Suite
+        id: test_suite
+        continue-on-error: true
+        timeout-minutes: 60
+        uses: cypress-io/github-action@v4
+        with:
+          headed: false
+          env: storeURL=${{inputs.url}},username=${{inputs.username}},password=${{inputs.password}},iterations=${{inputs.iterations}}
+          spec: ${{inputs.specPath}}
+          config-file: cypress.ci.json
+
+      - name: Slack Post
+        uses: slackapi/slack-github-action@v1.16.0
+        with:
+          channel-id: "C03NSCZP249"
+          slack-message: |
+            *Cypress Automation - OS Storefront*
+
+            *Test Result:* _${{steps.test_suite.outcome == 'success' && 'Success! :party_blob:' || 'Failure! :alert:'}}_
+
+            https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
+
+            _This message is automated. All hail Cartman._
+        env:
+          SLACK_BOT_TOKEN: ${{secrets.CARTMAN_SLACK_BOT_TOKEN}}

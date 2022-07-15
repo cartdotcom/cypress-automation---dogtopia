@@ -133,6 +133,10 @@ export class storeFront {
         return "div[class*='CustomPayments Custom'] div[data-payment-name='Purchase Order'] div div[data-payment-name='Purchase Order']"
     }
 
+    static getCreditCardPayment() {
+        return "div[class*='checkout-creditCard payment-method'] div div[data-payment-name='CreditCard']"
+    }
+
     static getPurchaseOrderInput() {
         return cy.get("input[id*='CustomPaymentMethods']")
     }

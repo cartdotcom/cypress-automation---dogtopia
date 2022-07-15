@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "e2e-test:dev": "npx cypress open",
+    "e2e-run:dev": "npx cypress run --browser chrome --headless",
     "e2e-test:stage": "npx cypress open --env configFile=cypress.stage.json",
     "e2e-test:prod": "npx cypress open --env configFile=cypress.prod.json"
   },

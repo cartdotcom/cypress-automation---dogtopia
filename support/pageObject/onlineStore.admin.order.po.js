@@ -41,6 +41,7 @@ export class order {
     }
 
     static getOrderEditSuccessBanner() {
+        cy.wait(10000)
         return this.getOrderEditIframe().find("div[class*='alert-success']")
     }
 
@@ -65,7 +66,11 @@ export class order {
     }
 
     static getOrderQuanity() {
-        return this.getOrderEditIframe().find("td[class='ShoppingCart'] input[id*='Quantity']")
+        return this.getOrderEditIframe().find("div[class*='OrderEditOverridePrice'] input[id*='Quantity']")
+    }
+
+    static getOrderOverridePrice() {
+        return this.getOrderEditIframe().find("div[class*='OrderEditOverridePrice'] input[id*='txtPriceOverride']")
     }
 
     static getOrderRemove() {
@@ -73,10 +78,14 @@ export class order {
     }
 
     static getOrderRemoveBtnByName(name) {
-        return this.getOrderEditIframe().find("div[class*='order-edit-item-name'] a").contains(name).parent().parent().parent().parent().find("a[alternatetext='Remove from Cart']")
+        return this.getOrderEditIframe().find("div[class*='order-edit-item-name'] a").contains(name).parent().parent().parent().find("a[title='Remove from Order']")
+    }
+
+    static getOrderByName(name) {
+        return this.getOrderEditIframe().find("div[class*='order-edit-item-name'] a").contains(name)
     }
 
     static getOrderTotal() {
-        return this.getOrderEditIframe().find("td[class*='ShoppingCartPrice'] span[id*='_ctlOrderItemsEdit_lblBalance']")
+        return this.getOrderEditIframe().find("div[id*='ctlOrderItemsEdit_trTotal'] span[id*='_ctlOrderItemsEdit_lblTotal']")
     }
 }

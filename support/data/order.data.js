@@ -1,7 +1,7 @@
 
 export let orderData = {
     "orderTitle": "Orders",
-    'editOrderTitle': "Order Edit"
+    'editOrderTitle': "Edit  Order"
 }
 
 export let orderStatus = {
@@ -16,7 +16,7 @@ export let orderSaveMsg = {
 }
 
 export let invalidCC = {
-    "ccNum": "5448280034000007",
+    "ccNum": "4111111111111111",
     "ccName": "Test User",
     "ccExp": "01/29",
     "ccCvv": "123"
