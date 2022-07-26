@@ -59,17 +59,17 @@ jobs:
           spec: ${{inputs.specPath}}
           config-file: cypress.ci.json
 
-      - name: Slack Post
-        uses: slackapi/slack-github-action@v1.16.0
-        with:
-          channel-id: "C03NSCZP249"
-          slack-message: |
-            *Cypress Automation - Dogtopia*
+#       - name: Slack Post
+#         uses: slackapi/slack-github-action@v1.16.0
+#         with:
+#           channel-id: "C03NSCZP249"
+#           slack-message: |
+#             *Cypress Automation - Dogtopia*
 
-            *Test Result:* _${{steps.test_suite.outcome == 'success' && 'Success! :party_blob:' || 'Failure! :alert:'}}_
+#             *Test Result:* _${{steps.test_suite.outcome == 'success' && 'Success! :party_blob:' || 'Failure! :alert:'}}_
 
-            https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
+#             https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
 
-            _This message is automated. All hail Cartman._
-        env:
-          SLACK_BOT_TOKEN: ${{secrets.CARTMAN_SLACK_BOT_TOKEN}}
+#             _This message is automated. All hail Cartman._
+#         env:
+#           SLACK_BOT_TOKEN: ${{secrets.CARTMAN_SLACK_BOT_TOKEN}}
